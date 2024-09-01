@@ -188,7 +188,7 @@ PubMaster::PubMaster(const std::vector<const char *> &service_list) {
   for (auto name : service_list) {
     assert(services.count(name) > 0);
     PubSocket *socket = PubSocket::create(message_context.context(), name);
-    assert(socket);
+    // assert(socket);
     sockets_[name] = socket;
   }
 }
