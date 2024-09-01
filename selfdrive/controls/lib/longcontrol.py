@@ -15,8 +15,8 @@ def long_control_state_trans(CP, active, long_control_state, v_ego, v_target,
   # Ignore cruise standstill if car has a gas interceptor
   cruise_standstill = cruise_standstill and not CP.enableGasInterceptorDEPRECATED
   accelerating = v_target_1sec > v_target
-  planned_stop = (v_target < CP.vEgoStopping and
-                  v_target_1sec < CP.vEgoStopping and
+  planned_stop = (v_target < CP.vEgoStopping * 1.3 and
+                  v_target_1sec < CP.vEgoStopping * 1.3 and
                   not accelerating)
   stay_stopped = (v_ego < CP.vEgoStopping and
                   (brake_pressed or cruise_standstill))
@@ -110,8 +110,8 @@ class LongControl:
       self.reset(CS.vEgo)
 
     elif self.long_control_state == LongCtrlState.starting:
-      output_accel = self.CP.startAccel
-      self.reset(CS.vEgo)
+      output_accel = self.CP.startAccel * 1.5  # Increase acceleration by 50%
+      self.reset()
 
     elif self.long_control_state == LongCtrlState.pid:
       self.v_pid = v_target_now
