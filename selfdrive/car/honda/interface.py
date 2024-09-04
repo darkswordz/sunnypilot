@@ -267,6 +267,20 @@ class CarInterface(CarInterfaceBase):
       *create_button_events(self.CS.cruise_setting, self.CS.prev_cruise_setting, SETTINGS_BUTTONS_DICT),
     ]
 
+    MIN_ENGAGE_SPEED = 1 * CV.MPH_TO_MS  # convert 15 mph to m/s
+
+    # Get the current vehicle speed
+    current_speed = self.CS.vEgo
+
+    # Check if speed is above the engagement threshold
+    if current_speed >= MIN_ENGAGE_SPEED:
+        # Engage OpenPilot logic here
+        self.CS.accEnabled = True
+    else:
+        # Disengage or prevent engagement if speed is below threshold
+        self.CS.accEnabled = False
+
+
     self.CS.mads_enabled = self.get_sp_cruise_main_state(ret)
 
     self.CS.accEnabled = self.get_sp_v_cruise_non_pcm_state(ret, c.vCruise, self.CS.accEnabled)

@@ -19,7 +19,7 @@ class CarControllerParams:
   # Our controller should still keep the 2 second average above
   # -3.5 m/s^2 as per planner limits
   NIDEC_ACCEL_MIN = -4.0  # m/s^2
-  NIDEC_ACCEL_MAX = 1.6  # m/s^2, lower than 2.0 m/s^2 for tuning reasons
+  NIDEC_ACCEL_MAX = 2.5 # m/s^2, lower than 2.0 m/s^2 for tuning reasons
 
   NIDEC_ACCEL_LOOKUP_BP = [-1., 0., .6]
   NIDEC_ACCEL_LOOKUP_V = [-4.8, 0., 2.0]
@@ -249,7 +249,7 @@ class CAR(Platforms):
   )
   HONDA_PILOT = HondaNidecPlatformConfig(
     [
-      HondaCarDocs("Honda Pilot 2016-22", min_steer_speed=12. * CV.MPH_TO_MS),
+      HondaCarDocs("Honda Pilot 2016-22", min_steer_speed=10. * CV.MPH_TO_MS),
       HondaCarDocs("Honda Passport 2019-23", "All", min_steer_speed=12. * CV.MPH_TO_MS),
     ],
     CarSpecs(mass=4278 * CV.LB_TO_KG, wheelbase=2.86, centerToFrontRatio=0.428, steerRatio=16.0, tireStiffnessFactor=0.444),  # as spec
