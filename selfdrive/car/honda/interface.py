@@ -267,7 +267,7 @@ class CarInterface(CarInterfaceBase):
       *create_button_events(self.CS.cruise_setting, self.CS.prev_cruise_setting, SETTINGS_BUTTONS_DICT),
     ]
 
-    MIN_ENGAGE_SPEED = 1 * CV.MPH_TO_MS  # convert 15 mph to m/s
+    MIN_ENGAGE_SPEED = 10 * CV.MPH_TO_MS  # convert 15 mph to m/s
 
     # Get the current vehicle speed
     current_speed = self.CS.vEgo

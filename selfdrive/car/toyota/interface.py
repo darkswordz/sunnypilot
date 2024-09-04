@@ -173,7 +173,7 @@ class CarInterface(CarInterfaceBase):
 
     def default_longitudinal_tuning():
       tune.kiBP = [0., 5., 35.]
-      tune.kiV = [4.6, 3.4, 2.5]  # Example: increasing each value by 1
+      tune.kiV = [3.6, 2.4, 1.5]
 
     tune = ret.longitudinalTuning
     if candidate in TSS2_CAR or ret.enableGasInterceptorDEPRECATED:
@@ -206,6 +206,21 @@ class CarInterface(CarInterfaceBase):
 
   # returns a car.CarState
   def _update(self, c):
+
+    MIN_ENGAGE_SPEED = self.CP.minEnableSpeed  # convert 15 mph to m/s
+
+    # Get the current vehicle speed
+    current_speed = self.CS.vEgo
+
+    # Check if speed is above the engagement threshold
+    if current_speed >= MIN_ENGAGE_SPEED:
+        # Engage OpenPilot logic here
+        self.CS.accEnabled = True
+        self.CP.minEnableSpeed =self.CS.vEgo
+    else:
+        # Disengage or prevent engagement if speed is below threshold
+        self.CS.accEnabled = False
+
     ret = self.CS.update(self.cp, self.cp_cam)
 
     if self.CP.carFingerprint in (TSS2_CAR - RADAR_ACC_CAR) or (self.CP.flags & ToyotaFlags.SMART_DSU and not self.CP.flags & ToyotaFlags.RADAR_CAN_FILTER):
